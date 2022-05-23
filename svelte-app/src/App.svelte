@@ -22,11 +22,13 @@
   import Home from "./Home.svelte";
   import DataCatalogue from "./ConsultationCatalogue.svelte";
   import CreationDP from "./CreationDP.svelte";
+  import Authentication from "./Authentication.svelte";
 
   export let url = "";
   let isSideNavOpen = false;
   let isOpen1 = false;
   let isOpen2 = false;
+  let authenticated = false;
 </script>
 
 <Router url={url}>
@@ -36,6 +38,7 @@
 		</svelte:fragment>
 		<HeaderUtilities>
 		  <HeaderGlobalAction aria-label="Settings" icon={SettingsAdjust} />
+		  {#if authenticated == true}
 		  <HeaderAction
 			bind:isOpen={isOpen1}
 			icon={UserAvatarFilledAlt}
@@ -49,6 +52,9 @@
 			  <HeaderPanelLink>Logout</HeaderPanelLink>
 			</HeaderPanelLinks>
 		  </HeaderAction>
+		  {:else}
+		  <Link to="/authentication"> <SideNavLink text="Register / Login" /> </Link>
+		  {/if}
 		  <HeaderAction bind:isOpen={isOpen2}>
 			<HeaderPanelLinks>
 			  <HeaderPanelDivider>Switcher subject 1</HeaderPanelDivider>
@@ -74,9 +80,10 @@
 		<Grid>
 		  <Row>
 			<Column>
+				<Route path="/"><Home /></Route>
 				<Route path="data-catalogues" component="{DataCatalogue}" />
 				<Route path="add-dp" component="{CreationDP}" />
-				<Route path="/"><Home /></Route>
+				<Route path="/authentication"><Authentication /></Route>
 			</Column>
 		  </Row>
 		</Grid>
