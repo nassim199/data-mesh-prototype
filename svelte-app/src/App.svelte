@@ -9,8 +9,6 @@
     HeaderPanelLink,
     SideNav,
     SideNavItems,
-    SideNavMenu,
-    SideNavMenuItem,
     SideNavLink,
     SkipToContent,
     Content,
@@ -20,13 +18,18 @@
   } from "carbon-components-svelte";
   import SettingsAdjust from "carbon-icons-svelte/lib/SettingsAdjust.svelte";
   import UserAvatarFilledAlt from "carbon-icons-svelte/lib/UserAvatarFilledAlt.svelte";
+  import { Router, Link, Route } from "svelte-routing";
+  import Home from "./Home.svelte";
+  import DataCatalogue from "./ConsultationCatalogue.svelte";
+  import CreationDP from "./CreationDP.svelte";
 
+  export let url = "";
   let isSideNavOpen = false;
   let isOpen1 = false;
   let isOpen2 = false;
 </script>
 
-<main>
+<Router url={url}>
 	<Header company="ERIC" platformName="Data Mesh prototype" bind:isSideNavOpen>
 		<svelte:fragment slot="skip-to-content">
 		  <SkipToContent />
@@ -61,9 +64,9 @@
 	  
 	  <SideNav bind:isOpen={isSideNavOpen}>
 		<SideNavItems>
-		  <SideNavLink text="Home" />
-		  <SideNavLink text="Consultation Data Catalogues" />
-		  <SideNavLink text="Creation Data Product" />
+			<Link to="/"> <SideNavLink text="Home" /> </Link>
+			<Link to="/data-catalogues"> <SideNavLink text="Consultation Data Catalogues" /> </Link>
+			<Link to="/add-dp"> <SideNavLink text="Creation Data Product" /> </Link>
 		</SideNavItems>
 	  </SideNav>
 	  
@@ -71,9 +74,11 @@
 		<Grid>
 		  <Row>
 			<Column>
-			  <h1>Welcome</h1>
+				<Route path="data-catalogues" component="{DataCatalogue}" />
+				<Route path="add-dp" component="{CreationDP}" />
+				<Route path="/"><Home /></Route>
 			</Column>
 		  </Row>
 		</Grid>
 	  </Content>
-</main>
+	</Router>
