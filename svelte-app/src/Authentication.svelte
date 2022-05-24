@@ -7,6 +7,7 @@ import {
     TextInput 
   } from "carbon-components-svelte";
   import axios from "axios";
+  import {acteur, accessToken} from "./store/acteur";
   import Api from "./services/Api";
 
 
@@ -42,16 +43,11 @@ import {
       }
     })
     .then((res) => {
-      console.log(res);
-      axios({
-        method: "get",
-        url: 'http://localhost:3000/auth/hidden-content',
-        headers: {
-          authorization: "JWT " + res.data.accessToken
-        }
-      })
-      .then((res) => console.log(res))
-      .catch((error) => console.log(error));
+      acteur.set({
+          id: res.data.acteur.id,
+          email: res.data.acteur.email
+      });
+      accessToken.set(res.data.accessToken)
     })
     .catch((error) => console.log(error));
     }
