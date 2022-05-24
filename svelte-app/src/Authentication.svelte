@@ -7,32 +7,54 @@ import {
     TextInput 
   } from "carbon-components-svelte";
   import axios from "axios";
+  import Api from "./services/Api";
 
 
-  let name = "nassim";
-  let email = "test2@test.com";
+  let nom = "nassim";
+  let email = "test7@test.com";
   let password = "test";
   function register(e) {
     e.preventDefault();
-    console.log(name, email, password)
-    axios.post('localhost:3000/auth/register', {
-        name,
+    console.log(nom, email, password)
+    axios({
+      method: 'post',
+      url: 'http://localhost:3000/auth/register',
+      data: {
+        nom,
         email,
         password
+      }
     })
     .then((res) => console.log(res))
     .catch((error) => console.log(error));
-  }
-  function login(e) {
-    e.preventDefault();
-    console.log(name, email, password)
-    axios.post('localhost:3000/auth/login', {
+    // Api.post("/auth/register", {nom, email, password})
+    // .then((res) => console.log(res))
+    // .catch((error) => console.log(error));
+    }
+    function login(e) {
+      e.preventDefault();
+      axios({
+      method: 'post',
+      url: 'http://localhost:3000/auth/login',
+      data: {
         email,
         password
+      }
     })
-    .then((res) => console.log(res))
+    .then((res) => {
+      console.log(res);
+      axios({
+        method: "get",
+        url: 'http://localhost:3000/auth/hidden-content',
+        headers: {
+          authorization: "JWT " + res.data.accessToken
+        }
+      })
+      .then((res) => console.log(res))
+      .catch((error) => console.log(error));
+    })
     .catch((error) => console.log(error));
-  }
+    }
 </script>
 
 
@@ -42,7 +64,7 @@ import {
     <svelte:fragment slot="content">
       <TabContent>
         <Form on:submit={register}>
-            <TextInput id="name_register" bind:value={name} labelText="User name" placeholder="Enter user name..." />
+            <TextInput id="name_register" bind:value={nom} labelText="User name" placeholder="Enter user name..." />
             <TextInput id="email_register" bind:value={email} labelText="e-mail" placeholder="Enter e-mail..." />
             <PasswordInput id="pwd_register" bind:value={password} labelText="Password" placeholder="Enter password..." />
             <Button type="submit">Register</Button>
