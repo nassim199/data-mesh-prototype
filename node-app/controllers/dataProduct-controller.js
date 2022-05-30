@@ -3,10 +3,10 @@ var DataProduct = require("../models/dataProduct");
 exports.createDP = async (req, res) => {
   const dataProduct = new DataProduct({
     nom: req.body.nom,
-    description: req.body.nom,
-    formatData: req.body.nom,
-    dateIngestion: req.body.date,
-    link: req.body.nom,
+    description: req.body.description,
+    formatData: req.body.formatData,
+    dateIngestion: req.body.dateIngestion,
+    link: req.body.link,
     owner: req.acteur._id
 });
 
