@@ -6,7 +6,6 @@
         TextInput 
       } from "carbon-components-svelte";
       import axios from "axios";
-      import { navigate } from "svelte-routing";
     
       import {acteur, accessToken} from "./store/acteur";
 import { get } from "svelte/store";

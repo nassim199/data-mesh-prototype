@@ -27,3 +27,17 @@ dataProduct.save((err, dp) => {
   });
 };
 
+exports.getAllDPs = async (req, res) => {
+    try {
+        let dataProducts = await DataProduct.find().populate({ path: 'owner', select: 'nom' });
+    
+        res.status(201).json({
+          message: 'get all data products successful',
+          dataProducts
+        });
+      } catch (err) {
+        console.log(err);
+      }
+  };
+  
+
