@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 authRoutes = require("./routes/auth");
+dpRoutes = require("./routes/dataProduct");
 
 app = express();
 
@@ -23,7 +24,7 @@ app.use((req, res, next) => {
   });
   
 app.use('/auth', authRoutes);
-//app.use('/game', gameRoutes);
+app.use('/dp', dpRoutes);
 
 app.use((req, res) => {
     return res

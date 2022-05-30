@@ -15,6 +15,10 @@ dataProductSchema = new Schema({
         type: String,
         required: true
     },
+    dateIngestion: {
+        type: Date,
+        required:true
+    },
     link: {
         type: String,
         required: true
