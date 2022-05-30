@@ -10,18 +10,19 @@ exports.createDP = async (req, res) => {
     owner: req.acteur._id
 });
 
-dataProduct.save((err, acteur) => {
+dataProduct.save((err, dp) => {
     if (err) {
-      res.status(500)
-        .send({
-          message: err
-        });
-      return;
+        res.status(500).send({message: err});
+        return;
     } else {
-      res.status(200)
-        .send({
-          message: "data product registered successfully"
-        })
+        req.acteur.dataProducts.push(dp._id);
+        req.acteur.save((err, acteur) => {
+            if (err) {
+                res.status(500).send({message: err});
+                return;
+            } else {
+                res.status(200).send({message: "data product created successfully"});
+            }});
     }
   });
 };
