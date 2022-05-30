@@ -7,8 +7,9 @@ import {
     TextInput 
   } from "carbon-components-svelte";
   import axios from "axios";
+  import { navigate } from "svelte-routing";
+
   import {acteur, accessToken} from "./store/acteur";
-  import Api from "./services/Api";
 
 
   let nom = "nassim";
@@ -45,9 +46,12 @@ import {
     .then((res) => {
       acteur.set({
           id: res.data.acteur.id,
-          email: res.data.acteur.email
+          email: res.data.acteur.email,
+          authenticated: true
       });
-      accessToken.set(res.data.accessToken)
+      accessToken.set(res.data.accessToken);
+
+      navigate("/", { replace: true });
     })
     .catch((error) => console.log(error));
     }

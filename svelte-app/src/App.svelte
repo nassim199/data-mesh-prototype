@@ -24,11 +24,12 @@
   import CreationDP from "./CreationDP.svelte";
   import Authentication from "./Authentication.svelte";
 
+  import {acteur} from "./store/acteur";
+
   export let url = "";
   let isSideNavOpen = false;
   let isOpen1 = false;
   let isOpen2 = false;
-  let authenticated = false;
 </script>
 
 <Router url={url}>
@@ -38,7 +39,7 @@
 		</svelte:fragment>
 		<HeaderUtilities>
 		  <HeaderGlobalAction aria-label="Settings" icon={SettingsAdjust} />
-		  {#if authenticated == true}
+		  {#if $acteur.authenticated == true}
 		  <HeaderAction
 			bind:isOpen={isOpen1}
 			icon={UserAvatarFilledAlt}
