@@ -31,7 +31,7 @@ app.use((req, res) => {
 });
 
 
-mongoose.connect("mongodb://localhost:27017", { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.ConnectionLink, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log("app running");
     const server = app.listen(process.env.PORT || 3000);

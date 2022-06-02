@@ -40,4 +40,8 @@ exports.getAllDPs = async (req, res) => {
       }
   };
   
-
+  
+ 
+exports.test = async (req, res) => {
+  next();
+};

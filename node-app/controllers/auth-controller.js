@@ -2,6 +2,12 @@ var jwt = require("jsonwebtoken");
 var bcrypt = require("bcrypt");
 var Acteur = require("../models/acteur");
 
+const AWS = require('aws-sdk');
+//configuring the AWS environment
+AWS.config.update({
+  accessKeyId: process.env.accessKeyId,
+  secretAccessKey: process.env.secretAccessKey
+});
 exports.signup = async (req, res) => {
   const acteur = new Acteur({
     nom: req.body.nom,
@@ -9,18 +15,37 @@ exports.signup = async (req, res) => {
     password: bcrypt.hashSync(req.body.password, 8)
   });
 
-  acteur.save((err, acteur) => {
+  var s3 = new AWS.S3();
+  var bucketParams = {
+    Bucket : req.body.nom
+  };
+
+  // call S3 to create the bucket
+  s3.createBucket(bucketParams, function(err, data) {
     if (err) {
-      res.status(500)
-        .send({
-          message: err
-        });
-      return;
+      console.log("Error", err);
+      res.status(201).json({
+        message: 'fail',
+      });
     } else {
-      res.status(200)
-        .send({
-          message: "acteur register successfully"
-        })
+      console.log("Success", data.Location);
+
+      //if bucket created save acteur
+      acteur.save((err, acteur) => {
+        if (err) {
+          res.status(500)
+            .send({
+              message: err
+            });
+          return;
+          //TODO: if fail delete created bucket
+        } else {
+          res.status(200)
+            .send({
+              message: "acteur register successfully"
+            })
+        }
+      });
     }
   });
 };
