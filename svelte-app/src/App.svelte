@@ -23,6 +23,7 @@
   import DataCatalogue from "./ConsultationCatalogue.svelte";
   import CreationDP from "./CreationDP.svelte";
   import Authentication from "./Authentication.svelte";
+  import SqlStudio from "./SqlStudio.svelte";
 
   import {acteur} from "./store/acteur";
 
@@ -74,6 +75,7 @@
 			<Link to="/"> <SideNavLink text="Home" /> </Link>
 			<Link to="/data-catalogues"> <SideNavLink text="Consultation Data Catalogues" /> </Link>
 			<Link to="/add-dp"> <SideNavLink text="Creation Data Product" /> </Link>
+			<Link to="/sql-studio"> <SideNavLink text="SQL Studio" /> </Link>
 		</SideNavItems>
 	  </SideNav>
 	  
@@ -85,6 +87,7 @@
 				<Route path="data-catalogues" component="{DataCatalogue}" />
 				<Route path="add-dp" component="{CreationDP}" />
 				<Route path="/authentication"><Authentication /></Route>
+				<Route path="/sql-studio"><SqlStudio/></Route>
 			</Column>
 		  </Row>
 		</Grid>

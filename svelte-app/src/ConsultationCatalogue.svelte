@@ -68,11 +68,11 @@
             <StructuredListCell> 
                 <Row>
                     <Column>
-                        {dataProduct.link} 
+                        {`http://localhost:3000/dp/${dataProduct._id}/get_data`} 
                     </Column>
                      
                     <Column>
-                        <Button iconDescription="Copy" icon={CopyLink} on:click={() => navigator.clipboard.writeText(dataProduct.link)}/>
+                        <Button iconDescription="Copy" icon={CopyLink} on:click={() => navigator.clipboard.writeText(`http://localhost:3000/dp/${dataProduct._id}/get_data`)}/>
                     </Column>
                 </Row> 
             </StructuredListCell>
