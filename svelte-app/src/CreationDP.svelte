@@ -21,7 +21,7 @@ import { get } from "svelte/store";
         e.preventDefault();
         axios({
           method: 'post',
-          url: 'http://localhost:3000/dp/create-dp',
+          url:  API_URL + '/dp/create-dp',
           data: {
             nom,
             description,

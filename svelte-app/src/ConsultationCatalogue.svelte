@@ -13,7 +13,7 @@
   let dataProduct = null;
   axios({
         method: 'get',
-        url: 'http://localhost:3000/dp/get-dps',
+        url: API_URL + '/dp/get-dps',
     })
     .then((res) => {
         dataProducts = res.data.dataProducts;

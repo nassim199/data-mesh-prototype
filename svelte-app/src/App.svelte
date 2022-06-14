@@ -24,6 +24,7 @@
   import CreationDP from "./CreationDP.svelte";
   import Authentication from "./Authentication.svelte";
   import SqlStudio from "./SqlStudio.svelte";
+  import MesDataProducts from "./MesDataProducts.svelte";
 
   import {acteur} from "./store/acteur";
 
@@ -60,24 +61,24 @@
 		  <HeaderAction bind:isOpen={isOpen2}>
 			<HeaderPanelLinks>
 			  <HeaderPanelDivider>Switcher subject 1</HeaderPanelDivider>
-			  <HeaderPanelLink>Switcher item 1</HeaderPanelLink>
-			  <HeaderPanelDivider>Switcher subject 2</HeaderPanelDivider>
-			  <HeaderPanelLink>Switcher item 1</HeaderPanelLink>
-			  <HeaderPanelLink>Switcher item 2</HeaderPanelLink>
-
+			  <Link to="/my-dps"> <HeaderPanelLink>Mes data products</HeaderPanelLink> </Link>
+			  <HeaderPanelDivider></HeaderPanelDivider>
+			  <Link to="/data-catalogues"> <HeaderPanelLink>Consultation Data Catalogues</HeaderPanelLink> </Link>
+			  <Link to="/add-dp"> <HeaderPanelLink>Creation Data Product</HeaderPanelLink> </Link>
+			  <Link to="/sql-studio"> <HeaderPanelLink>SQL Studio</HeaderPanelLink> </Link>
 			</HeaderPanelLinks>
 		  </HeaderAction>
 		</HeaderUtilities>
 	  </Header>
 	  
-	  <SideNav bind:isOpen={isSideNavOpen}>
+	  <!-- <SideNav bind:isOpen={isSideNavOpen}>
 		<SideNavItems>
 			<Link to="/"> <SideNavLink text="Home" /> </Link>
 			<Link to="/data-catalogues"> <SideNavLink text="Consultation Data Catalogues" /> </Link>
 			<Link to="/add-dp"> <SideNavLink text="Creation Data Product" /> </Link>
 			<Link to="/sql-studio"> <SideNavLink text="SQL Studio" /> </Link>
 		</SideNavItems>
-	  </SideNav>
+	  </SideNav> -->
 	  
 	  <Content>
 		<Grid>
@@ -88,6 +89,7 @@
 				<Route path="add-dp" component="{CreationDP}" />
 				<Route path="/authentication"><Authentication /></Route>
 				<Route path="/sql-studio"><SqlStudio/></Route>
+				<Route path="/my-dps"><MesDataProducts/></Route>
 			</Column>
 		  </Row>
 		</Grid>

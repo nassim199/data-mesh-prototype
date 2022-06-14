@@ -20,7 +20,7 @@ import {
     console.log(nom, email, password)
     axios({
       method: 'post',
-      url: 'http://localhost:3000/auth/register',
+      url: API_URL + '/auth/register',
       data: {
         nom,
         email,
@@ -37,7 +37,7 @@ import {
       e.preventDefault();
       axios({
       method: 'post',
-      url: 'http://localhost:3000/auth/login',
+      url: API_URL + '/auth/login',
       data: {
         email,
         password
