@@ -1,6 +1,7 @@
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcrypt");
 var Acteur = require("../models/acteur");
+var Folder = require("../models/folder");
 
 const AWS = require('aws-sdk');
 //configuring the AWS environment
@@ -14,6 +15,7 @@ exports.signup = async (req, res) => {
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8)
   });
+  const rootFolder = new Folder({nom: ""});
 
   var s3 = new AWS.S3();
   var bucketParams = {
@@ -31,21 +33,21 @@ exports.signup = async (req, res) => {
       console.log("Success", data.Location);
 
       //if bucket created save acteur
-      acteur.save((err, acteur) => {
-        if (err) {
-          res.status(500)
-            .send({
-              message: err
-            });
-          return;
-          //TODO: if fail delete created bucket
+      rootFolder.save((err, folder) => {
+        if (err) { res.status(500).send({message: err}); return;//TODO: if fail delete created bucket
         } else {
-          res.status(200)
-            .send({
-              message: "acteur register successfully"
-            })
+          acteur.folder = folder._id
+          acteur.save((err, acteur) => {
+            if (err) { res.status(500).send({message: err}); return;
+            } else {
+              res.status(200)
+                .send({
+                  message: "acteur register successfully"
+                })
+            }
+          });
         }
-      });
+      })
     }
   });
 };

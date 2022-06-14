@@ -1,4 +1,5 @@
 var DataProduct = require("../models/dataProduct");
+var Folder = require("../models/folder");
 
 exports.createDP = async (req, res) => {
   const dataProduct = new DataProduct({
@@ -10,19 +11,27 @@ exports.createDP = async (req, res) => {
     owner: req.acteur._id
 });
 
-dataProduct.save((err, dp) => {
+dataProduct.save(async (err, dp) => {
     if (err) {
         res.status(500).send({message: err});
         return;
     } else {
-        req.acteur.dataProducts.push(dp._id);
-        req.acteur.save((err, acteur) => {
-            if (err) {
-                res.status(500).send({message: err});
-                return;
-            } else {
-                res.status(200).send({message: "data product created successfully"});
-            }});
+        //TODO: add data product to folder
+        try {
+          //find folder
+          let folder = await Folder.findById(req.acteur.folder);
+          //add data product to folder
+          folder.dataProducts.push(dp._id);
+          folder.save((err, folder) => {
+              if (err) {
+                  res.status(500).send({message: err});
+                  return;
+              } else {
+                  res.status(200).send({message: "data product created successfully"});
+              }});
+        } catch (err) {
+
+        }
     }
   });
 };
@@ -37,9 +46,29 @@ exports.getAllDPs = async (req, res) => {
         });
       } catch (err) {
         console.log(err);
+        res.status(500).json({
+          message: 'get all data products not successful'
+        });
       }
   };
   
+exports.getMyDPs = async (req, res) => {
+  let folderId = req.acteur.folder;
+
+  try {
+    tree = await Folder.findById(folderId)
+
+    res.status(201).json({
+      message: 'get my data products successful',
+      tree: tree
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: 'get all data products not successful'
+    });
+    console.log(err);
+  }
+}  
 const AWS = require('aws-sdk');
 //configuring the AWS environment
 AWS.config.update({
@@ -138,7 +167,7 @@ exports.test_python = async (req, res) => {
     args: [process.env.AWS_ACCESS_KEY_ID, process.env.AWS_SECRET_ACCESS_KEY, req.query.sql]
   };
   
-  PythonShell.run('../pandas_sql.py', options, function (err, results) {
+  PythonShell.run('./pandas_sql.py', options, function (err, results) {
     if (err) throw err;
     // results is an array consisting of messages collected during execution
 

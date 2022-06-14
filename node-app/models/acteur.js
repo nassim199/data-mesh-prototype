@@ -24,10 +24,14 @@ acteurSchema = new Schema({
         type: String,
         required: true
     },
-    dataProducts: [{
+    // dataProducts: [{
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'DataProduct'
+    // }],
+    folder: {
         type: Schema.Types.ObjectId,
-        ref: 'DataProduct'
-    }]
+        ref: 'Folder'    
+    }
 })
 
 module.exports = mongoose.model('Acteur', acteurSchema);

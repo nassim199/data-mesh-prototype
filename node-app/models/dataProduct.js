@@ -7,6 +7,9 @@ dataProductSchema = new Schema({
         type: String,
         required: true
     },
+    path: {
+        type: String,
+    },
     description: {
         type: String,
         required: true

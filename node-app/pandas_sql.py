@@ -2,7 +2,7 @@ import pandas as pd
 from pandasql import sqldf
 import sys
 
-import boto3
+#import boto3
 
 #download dp data as a csv file 
 AWS_S3_BUCKET = "acteur1"
