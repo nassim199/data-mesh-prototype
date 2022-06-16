@@ -7,8 +7,9 @@ dataProductSchema = new Schema({
         type: String,
         required: true
     },
-    path: {
-        type: String,
+    folder: {
+        type: Schema.Types.ObjectId,
+        ref: 'Folder'
     },
     description: {
         type: String,
@@ -22,10 +23,23 @@ dataProductSchema = new Schema({
         type: Date,
         required:true
     },
-    link: {
-        type: String,
-        required: true
+    derniereMAJ: {
+        type: Date
     },
+    volume: {
+        type: Number
+    },
+    dataAvailable:{
+        type: Boolean,
+        default: false
+    },
+    outsideSourceLinks: [{
+        type: String
+    }],
+    dataLineage: [{
+        type: Schema.Types.ObjectId,
+        ref: 'DataProduct'
+    }],
     owner: {
         type: Schema.Types.ObjectId,
         ref: 'Acteur'

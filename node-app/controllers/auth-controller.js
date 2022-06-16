@@ -26,7 +26,7 @@ exports.signup = async (req, res) => {
   s3.createBucket(bucketParams, function(err, data) {
     if (err) {
       console.log("Error", err);
-      res.status(201).json({
+      res.status(500).json({
         message: 'fail',
       });
     } else {

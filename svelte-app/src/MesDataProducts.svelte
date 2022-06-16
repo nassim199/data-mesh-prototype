@@ -127,10 +127,6 @@
                             </Row> 
                         </StructuredListCell>
                       </StructuredListRow>
-                      <StructuredListRow>
-                        <StructuredListCell noWrap>Acteur</StructuredListCell>
-                        <StructuredListCell> {dataProduct.owner.nom} </StructuredListCell>
-                      </StructuredListRow>
                     </StructuredListBody>
                   </StructuredList>
                 {:else}

@@ -10,6 +10,7 @@ FolderSchema = new Schema({
     //     type: Schema.Types.ObjectId,
     //     ref: 'Folder'
     // },
+    path: String,
     children: [{
         type: Schema.Types.ObjectId,
         ref: 'Folder'

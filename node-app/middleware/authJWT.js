@@ -17,7 +17,6 @@ const verifyToken = (req, res, next) => {
                 message: err
               });
           } else {
-            console.log(acteur)
             req.acteur = acteur;
             next();
           }
