@@ -10,7 +10,7 @@
     function run_query() {
         axios({
         method: 'get',
-        url: API_URL + "/dp/test_sql?sql=" + query,
+        url: API_URL + "/dp/sql-query?sql=" + query,
     })
     .then((res) => {
         headers = res.data[0].schema.fields.map(f => {return {key : f.name, value: f.name}})

@@ -29,6 +29,9 @@ dataProductSchema = new Schema({
     volume: {
         type: Number
     },
+    downloads: [{
+        type: Date
+    }],
     dataAvailable:{
         type: Boolean,
         default: false

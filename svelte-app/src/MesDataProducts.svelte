@@ -1,5 +1,5 @@
 <script>
-    import { Row, Column, Grid, Content, Tile, Button, Modal, TextInput } from "carbon-components-svelte";
+    import { Row, Column, Grid, Content, Tile, Button, Modal, TextInput, CopyButton } from "carbon-components-svelte";
     import {
     StructuredList,
     StructuredListRow,
@@ -8,7 +8,6 @@
   } from "carbon-components-svelte";
     import {accessToken} from "./store/acteur";
     import { get } from "svelte/store";
-    import CopyLink from "carbon-icons-svelte/lib/CopyLink.svelte";
     import FolderAdd from "carbon-icons-svelte/lib/FolderAdd.svelte";
     import axios from "axios";
     import { TreeView } from "carbon-components-svelte";
@@ -93,6 +92,7 @@
           </Modal>
         </Column>
         <Column lg={12}>
+            <Button> Add data product </Button>
             <Content>
                 {#if dataProduct}
                 <StructuredList>
@@ -122,7 +122,7 @@
                                 </Column>
                                  
                                 <Column>
-                                    <Button iconDescription="Copy" icon={CopyLink} on:click={() => navigator.clipboard.writeText(`${url}/dp/${dataProduct._id}/get_data`)}/>
+                                    <CopyButton text={`${url}/dp/${dataProduct._id}/get_data`}/>
                                 </Column>
                             </Row> 
                         </StructuredListCell>

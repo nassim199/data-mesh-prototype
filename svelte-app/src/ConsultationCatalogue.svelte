@@ -6,8 +6,7 @@
     StructuredListCell,
     StructuredListBody
   } from "carbon-components-svelte";
-  import { Search, PaginationNav, Content, Tile, Button, Row, Column } from "carbon-components-svelte";
-  import CopyLink from "carbon-icons-svelte/lib/CopyLink.svelte";
+  import { Search, PaginationNav, Content, Tile, Row, Column, CopyButton } from "carbon-components-svelte";
   import axios from "axios";
   let dataProducts = [];
   let dataProduct = null;
@@ -72,7 +71,7 @@
                     </Column>
                      
                     <Column>
-                        <Button iconDescription="Copy" icon={CopyLink} on:click={() => navigator.clipboard.writeText(`http://localhost:3000/dp/${dataProduct._id}/get_data`)}/>
+                        <CopyButton text={`http://localhost:3000/dp/${dataProduct._id}/get_data`}/>
                     </Column>
                 </Row> 
             </StructuredListCell>
