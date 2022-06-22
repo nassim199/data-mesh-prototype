@@ -25,6 +25,7 @@
   import Authentication from "./Authentication.svelte";
   import SqlStudio from "./SqlStudio.svelte";
   import MesDataProducts from "./MesDataProducts.svelte";
+  import DataProduct from "./DataProduct.svelte";
 
   import {acteur} from "./store/acteur";
 
@@ -90,6 +91,7 @@
 				<Route path="/authentication"><Authentication /></Route>
 				<Route path="/sql-studio"><SqlStudio/></Route>
 				<Route path="/my-dps"><MesDataProducts/></Route>
+				<Route path="/data-product/:id" let:params > <DataProduct id="{params.id}"/> </Route>
 			</Column>
 		  </Row>
 		</Grid>

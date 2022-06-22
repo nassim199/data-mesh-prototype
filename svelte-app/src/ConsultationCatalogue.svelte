@@ -6,7 +6,9 @@
     StructuredListCell,
     StructuredListBody
   } from "carbon-components-svelte";
-  import { Search, PaginationNav, Content, Tile, Row, Column, CopyButton } from "carbon-components-svelte";
+  import { Search, PaginationNav, Content, Tile, Row, Column } from "carbon-components-svelte";
+  import { Card, CardText, CardActions, Button, MaterialApp } from 'svelte-materialify';
+  import { navigate } from "svelte-routing";
   import axios from "axios";
   let dataProducts = [];
   let dataProduct = null;
@@ -44,44 +46,21 @@
 
 <Content>
     {#if dataProduct}
-    <StructuredList>
-        <StructuredListBody>
-          <StructuredListRow>
-            <StructuredListCell noWrap>Nom</StructuredListCell>
-            <StructuredListCell> {dataProduct.nom} </StructuredListCell>
-          </StructuredListRow>
-          <StructuredListRow>
-            <StructuredListCell noWrap>Description</StructuredListCell>
-            <StructuredListCell> {dataProduct.description} </StructuredListCell>
-          </StructuredListRow>
-          <StructuredListRow>
-            <StructuredListCell noWrap>Format data</StructuredListCell>
-            <StructuredListCell> {dataProduct.formatData} </StructuredListCell>
-          </StructuredListRow>
-          <StructuredListRow>
-            <StructuredListCell noWrap>Date ingestion</StructuredListCell>
-            <StructuredListCell> {dataProduct.dateIngestion} </StructuredListCell>
-          </StructuredListRow>
-          <StructuredListRow>
-            <StructuredListCell noWrap>Lien data</StructuredListCell>
-            <StructuredListCell> 
-                <Row>
-                    <Column>
-                        {`http://localhost:3000/dp/${dataProduct._id}/get_data`} 
-                    </Column>
-                     
-                    <Column>
-                        <CopyButton text={`http://localhost:3000/dp/${dataProduct._id}/get_data`}/>
-                    </Column>
-                </Row> 
-            </StructuredListCell>
-          </StructuredListRow>
-          <StructuredListRow>
-            <StructuredListCell noWrap>Acteur</StructuredListCell>
-            <StructuredListCell> {dataProduct.owner.nom} </StructuredListCell>
-          </StructuredListRow>
-        </StructuredListBody>
-      </StructuredList>
+    <MaterialApp>
+      <div class="d-flex">
+        <Card>
+          <CardText>
+            <div>{dataProduct.nom}</div>
+            <div class="text--primary">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed exercitationem repellat voluptatum nostrum! Reprehenderit temporibus modi perspiciatis perferendis totam placeat vitae omnis ipsa quibusdam animi?
+            </div>
+          </CardText>
+          <CardActions>
+            <Button text class="primary-text" on:click={() => {navigate("/data-product/" + dataProduct._id);}}>Consulter</Button>
+          </CardActions>
+        </Card>
+      </div>
+    </MaterialApp>
     {:else}
     <Tile> selectionne data product </Tile>
     {/if}

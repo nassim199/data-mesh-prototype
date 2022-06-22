@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 
 authRoutes = require("./routes/auth");
 dpRoutes = require("./routes/dataProduct");
+dataRoutes = require("./routes/data");
 
 app = express();
 
@@ -25,6 +26,7 @@ app.use((req, res, next) => {
   
 app.use('/auth', authRoutes);
 app.use('/dp', dpRoutes);
+app.use('/data', dataRoutes);
 
 app.use((req, res) => {
     return res

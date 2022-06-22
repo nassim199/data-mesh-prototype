@@ -6,18 +6,24 @@
     let headers = []
     let records = []
     let fetched = false
+    let fetching = false
 
     function run_query() {
+        fetching = true
         axios({
         method: 'get',
-        url: API_URL + "/dp/sql-query?sql=" + query,
+        url: API_URL + "/data/sql-query?sql=" + query,
     })
     .then((res) => {
         headers = res.data[0].schema.fields.map(f => {return {key : f.name, value: f.name}})
         records = res.data[0].data.map((row,i) => { return {...row, id:i} })
         fetched = true
+        fetching = false
     })
-    .catch((error) => console.log(error));
+    .catch((error) => {
+        fetching = false
+        console.log(error)
+    });
     }
 </script>
   
@@ -35,4 +41,6 @@
     headers={headers}
     rows={records}
   />
+{:else if fetching}
+<DataTableSkeleton showHeader={false} showToolbar={false} />
 {/if}
