@@ -1,41 +1,62 @@
 var DataProduct = require("../models/dataProduct");
 var Folder = require("../models/folder");
 var mongoose = require('mongoose');
+const axios = require('axios');
 
 exports.createDP = async (req, res) => {
-  //const folderId = req.body.folderId
-  //TODO: add product to appropriate folder and not root folder
-  const folderId = req.acteur.folder
-
+  let folderId = req.body.selectedFolder;
   const dataProduct = new DataProduct({
     nom: req.body.nom,
     folder: folderId,
     description: req.body.description,
     formatData: req.body.formatData,
-    dateIngestion: req.body.dateIngestion,
+    dateCreation: req.body.dateCreation,
+    dataLineage: req.body.selectedIds,
+    hasNotebook: req.body.checked,
+    notebookId: "",
     owner: req.acteur._id
   });
-  
 
-  dataProduct.save(async (err, dp) => {
+  let dp_save = async (err, dp) => {
     if (err) {
         res.status(500).send({message: err});
         return;
     } else {
-        try {
-          await Folder.collection.updateOne(
-              { _id: mongoose.Types.ObjectId(folderId) },
-              { $addToSet: { dataProducts: mongoose.Types.ObjectId(dp._id)}  } 
-          );
-          res.status(200).send({message: "data product created successfully"});
-          } catch (err) {
-            res.status(500).json({
-              message: 'Data product not attached to its parent'
-            });
-            console.log(err);
-        }
+
+      await Folder.collection.updateOne(
+          { _id: mongoose.Types.ObjectId(folderId) },
+          { $addToSet: { dataProducts: mongoose.Types.ObjectId(dp._id)}  } 
+      );
+      res.status(200).send({message: "data product created successfully"});
     }
-  });
+  };
+
+  try {
+    if (req.body.checked) {
+      let folder = await Folder.collection.findOne({ _id: mongoose.Types.ObjectId(folderId) });
+      axios({
+        method: 'post',
+        url:  process.env.ZeppelinLink + 'notebook',
+        data: {
+          name: `${req.acteur.nom}/${folder.path}${req.body.nom}`
+        }
+      })
+      .then((res) => {
+        dataProduct.notebookId = res.data.body;
+
+        dataProduct.save(dp_save);
+      })
+      .catch((error) => console.log(error));
+    } else {
+      dataProduct.save(dp_save);
+    }
+
+  } catch (err) {
+    res.status(500).json({
+      message: 'Data product not attached to its parent'
+    });
+    console.log(err);
+  } 
 };
 
 exports.getAllDPs = async (req, res) => {

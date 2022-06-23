@@ -1,14 +1,9 @@
 <script>
-    import { Row, Column, Grid, Content, Tile, Button, Modal, TextInput, CopyButton } from "carbon-components-svelte";
-    import {
-    StructuredList,
-    StructuredListRow,
-    StructuredListCell,
-    StructuredListBody
-  } from "carbon-components-svelte";
+    import { Row, Column, Grid, Content, Tile, Button, Modal, TextInput, CopyButton, Link } from "carbon-components-svelte";
+    import { List, ListItem, Divider, Card, Subheader, MaterialApp } from 'svelte-materialify';
     import {accessToken} from "./store/acteur";
     import { get } from "svelte/store";
-    import FolderAdd from "carbon-icons-svelte/lib/FolderAdd.svelte";
+    import { NewTab, FolderAdd } from "carbon-icons-svelte";
     import axios from "axios";
     import { TreeView } from "carbon-components-svelte";
 
@@ -52,6 +47,8 @@
         selectedFolder = folders[0].id
     })
     .catch((error) => console.log(error));
+
+    //TODO: create folder call to backend
  
   </script>
   
@@ -82,7 +79,7 @@
             <TreeView
               labelText="Folders"
               children={folders}
-              bind:selectedFolder
+              bind:activeId={selectedFolder}
             />
             <TextInput
               id="folder-name"
@@ -92,43 +89,66 @@
           </Modal>
         </Column>
         <Column lg={12}>
-            <Button> Add data product </Button>
             <Content>
                 {#if dataProduct}
-                <StructuredList>
-                    <StructuredListBody>
-                      <StructuredListRow>
-                        <StructuredListCell noWrap>Nom</StructuredListCell>
-                        <StructuredListCell> {dataProduct.nom} </StructuredListCell>
-                      </StructuredListRow>
-                      <StructuredListRow>
-                        <StructuredListCell noWrap>Description</StructuredListCell>
-                        <StructuredListCell> {dataProduct.description} </StructuredListCell>
-                      </StructuredListRow>
-                      <StructuredListRow>
-                        <StructuredListCell noWrap>Format data</StructuredListCell>
-                        <StructuredListCell> {dataProduct.formatData} </StructuredListCell>
-                      </StructuredListRow>
-                      <StructuredListRow>
-                        <StructuredListCell noWrap>Date ingestion</StructuredListCell>
-                        <StructuredListCell> {dataProduct.dateIngestion} </StructuredListCell>
-                      </StructuredListRow>
-                      <StructuredListRow>
-                        <StructuredListCell noWrap>Lien data</StructuredListCell>
-                        <StructuredListCell> 
-                            <Row>
-                                <Column>
-                                    {`${url}/dp/${dataProduct._id}/get_data`} 
-                                </Column>
-                                 
-                                <Column>
-                                    <CopyButton text={`${url}/dp/${dataProduct._id}/get_data`}/>
-                                </Column>
-                            </Row> 
-                        </StructuredListCell>
-                      </StructuredListRow>
-                    </StructuredListBody>
-                  </StructuredList>
+                <Content>
+                  {#if dataProduct}
+                  <MaterialApp>
+                  <Card>
+                      <List>
+                        <ListItem>Nom : {dataProduct.nom}</ListItem>
+                        <Divider />
+                        <ListItem>Description : {dataProduct.description}</ListItem>
+                        <Divider />
+                        <ListItem>Format data : {dataProduct.formatData}</ListItem>
+                        <Divider />
+                        <ListItem>Date creation : {dataProduct.dateCreation}</ListItem>
+                        {#if dataProduct.dataAvailable}
+                        <Divider />
+                        <ListItem>
+                        <Row>
+                          <Column>lien : </Column>
+                            <Link>
+                                {`${url}/dp/${dataProduct._id}/get_data`} 
+                            </Link>
+                                
+                            <Column>
+                                <CopyButton text={`${url}/dp/${dataProduct._id}/get_data`}/>
+                            </Column>
+                        </Row>
+                        </ListItem>
+                        <ListItem>Volume : {dataProduct.volume / 1024} ko</ListItem>
+                        <ListItem>nombre de telechargements : {dataProduct.downloads.length}</ListItem>
+                        {:else}
+                        <ListItem> Pas de données disponibles </ListItem>
+                        {/if}
+                        {#if dataProduct.hasNotebook}
+                        <Divider />
+                        <ListItem>
+                        <Row>
+                            <Column>lien : </Column>
+                            <Link>
+                                {`http://localhost:8080/next/#/notebook/${dataProduct.notebookId}`} 
+                            </Link>
+                                
+                            <Column>
+                              <Button iconDescription="Open notebook" icon={NewTab} on:click={() => window.open(`http://localhost:8080/next/#/notebook/${dataProduct.notebookId}`)}/>
+                            </Column>
+                        </Row>
+                        </ListItem>
+                        {:else}
+                        <ListItem> Pas de notebook </ListItem>
+                        {/if}
+                      </List>
+                    </Card>
+              
+              
+                  </MaterialApp>
+                  {:else}
+                  <Tile> selectionne data product </Tile>
+                  {/if}
+              </Content>
+              
                 {:else}
                 <Tile> selectionne data product </Tile>
                 {/if}

@@ -35,7 +35,7 @@
           <Divider />
           <ListItem>Format data : {dataProduct.formatData}</ListItem>
           <Divider />
-          <ListItem>Date creation : {dataProduct.dateIngestion}</ListItem>
+          <ListItem>Date creation : {dataProduct.dateCreation}</ListItem>
           {#if dataProduct.dataAvailable}
           <Divider />
           <ListItem>

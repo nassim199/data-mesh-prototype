@@ -19,7 +19,7 @@ dataProductSchema = new Schema({
         type: String,
         required: true
     },
-    dateIngestion: {
+    dateCreation: {
         type: Date,
         required:true
     },
@@ -43,6 +43,12 @@ dataProductSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'DataProduct'
     }],
+    hasNotebook: {
+        type: Boolean
+    },
+    notebookId: {
+        type: String
+    },
     owner: {
         type: Schema.Types.ObjectId,
         ref: 'Acteur'
