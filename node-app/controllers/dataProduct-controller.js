@@ -79,7 +79,7 @@ exports.getMyDPs = async (req, res) => {
   let folderId = req.acteur.folder;
 
   try {
-    
+    //TODO: implement through a recursive function
     tree = await Folder.findById(folderId)
 
     res.status(201).json({
@@ -140,4 +140,43 @@ exports.createFolder = async (req, res) => {
       }
     }
   );  
+}
+
+async function past_dps(dp_id) {
+  try {
+    let dp = await DataProduct.findById(dp_id);
+
+    let dp_lineage = {
+      id: dp._id,
+      name: dp.nom,
+      children: []
+    }
+
+    for (let i = 0; i < dp.dataLineage.length; i++) {
+      const id = dp.dataLineage[i];
+      let temp_dp_lineage = await past_dps(id)
+      dp_lineage.children.push(temp_dp_lineage)
+    }
+
+    return dp_lineage;
+  } catch (err) {
+
+    console.log(err);
+  } 
+}
+exports.getDataLineage = async (req, res) => {
+  let dpId = req.params.dp_id;
+  try {
+    dp_lineage = await past_dps(dpId);
+    res.status(201).json({
+      message: 'get data product lineage successful',
+      data_lineage: dp_lineage
+    });
+    
+  } catch (err) {
+    res.status(500).json({
+      message: 'Error getting data lineage'
+    });
+    console.log(err);
+} 
 }

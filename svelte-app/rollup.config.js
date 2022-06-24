@@ -31,6 +31,7 @@ function serve() {
 
 export default {
 	input: 'src/main.js',
+	context: "window",
 	output: {
 		sourcemap: true,
 		format: 'iife',
@@ -40,6 +41,8 @@ export default {
 	plugins: [
 		replace({
 			API_URL: '"http://localhost:3000"',
+			preventAssignment: true,
+			'process.env.NODE_ENV': JSON.stringify('production'),
 		  }),
 		svelte({
 			compilerOptions: {
