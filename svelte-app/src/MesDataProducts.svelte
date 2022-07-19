@@ -103,11 +103,23 @@
                         <ListItem>Format data : {dataProduct.formatData}</ListItem>
                         <Divider />
                         <ListItem>Date creation : {dataProduct.dateCreation}</ListItem>
+                        <ListItem>
+                          <Row>
+                            <Column>lien pour l'upload : </Column>
+                              <Link>
+                                  {`${url}/dp/${dataProduct._id}/upload_data`} 
+                              </Link>
+                                  
+                              <Column>
+                                  <CopyButton text={`${url}/dp/${dataProduct._id}/upload_data`}/>
+                              </Column>
+                          </Row>
+                          </ListItem>
                         {#if dataProduct.dataAvailable}
                         <Divider />
                         <ListItem>
                         <Row>
-                          <Column>lien : </Column>
+                          <Column>lien pour recuperation : </Column>
                             <Link>
                                 {`${url}/dp/${dataProduct._id}/get_data`} 
                             </Link>
@@ -128,11 +140,11 @@
                         <Row>
                             <Column>lien : </Column>
                             <Link>
-                                {`http://localhost:8080/next/#/notebook/${dataProduct.notebookId}`} 
+                                {`http://10.70.10.254:8080/next/#/notebook/${dataProduct.notebookId}`} 
                             </Link>
                                 
                             <Column>
-                              <Button iconDescription="Open notebook" icon={NewTab} on:click={() => window.open(`http://localhost:8080/next/#/notebook/${dataProduct.notebookId}`)}/>
+                              <Button iconDescription="Open notebook" icon={NewTab} on:click={() => window.open(`http://10.70.10.254:8080/next/#/notebook/${dataProduct.notebookId}`)}/>
                             </Column>
                         </Row>
                         </ListItem>

@@ -36,9 +36,12 @@ dataProductSchema = new Schema({
         type: Boolean,
         default: false
     },
-    outsideSourceLinks: [{
+    isExternal: {
+        type: Boolean
+    },
+    externalSourceLink: {
         type: String
-    }],
+    },
     dataLineage: [{
         type: Schema.Types.ObjectId,
         ref: 'DataProduct'

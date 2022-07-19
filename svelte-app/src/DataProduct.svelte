@@ -1,5 +1,5 @@
 <script>
-    import { Row, Column, Grid, Content, Tile, Button, Modal, TextInput, CopyButton } from "carbon-components-svelte";
+    import { Row, Column, Grid, Content, Tile, Button, Modal, Link, CopyButton } from "carbon-components-svelte";
     import { List, ListItem, Divider, Card, Subheader, MaterialApp } from 'svelte-materialify';
 
     import "@carbon/styles/css/styles.css";
@@ -29,8 +29,8 @@
 
     let data_lineage = []
     let options = {
-            "title": "Dendrogram",
-            "height": "800px",
+            "title": "Data lineage",
+            "height": "500px",
             "tree": {
                 "type": "dendrogram",
                 "rootTitle": "dp3"
@@ -67,7 +67,7 @@
           <ListItem>
           <Row>
               <Column>
-                  {`lien : ${url}/dp/${dataProduct._id}/get_data`} 
+                lien : <Link>{`${url}/dp/${dataProduct._id}/get_data`} </Link>
               </Column>
                   
               <Column>
@@ -75,8 +75,10 @@
               </Column>
           </Row>
           </ListItem>
-          <ListItem>Volume : {dataProduct.volume / 1024} ko</ListItem>
+          <ListItem>Derniere date de mise a jour : {dataProduct.derniereMAJ}</ListItem>
+          <ListItem>Volume : {Number(dataProduct.volume / 1024).toFixed(2)} ko</ListItem>
           <ListItem>nombre de telechargements : {dataProduct.downloads.length}</ListItem>
+          
           {:else}
           <ListItem> Pas de données disponibles </ListItem>
           {/if}
@@ -85,6 +87,7 @@
 
     </MaterialApp>
     <!-- TODO: use svelvet for data lineage, or else delete svelvet -->
+    <h5>Lignage du Data Product :</h5>
     <TreeChart
         bind:data={data_lineage}
         bind:options

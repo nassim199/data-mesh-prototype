@@ -49,28 +49,37 @@ exports.get_data = async (req, res) => {
     }).populate({ path: 'owner', select: 'nom' })
     .populate({ path: 'folder', select: 'path'});
     
-  const s3 = new AWS.S3({ });
+  if (dp.isExternal) {
+    res.redirect(dp.externalSourceLink);
+  } else {
 
-  var params = {Bucket: dp.owner.nom, Key: `${dp.folder.path}${dp.nom}.${dp.formatData}`};
-
-  s3.getObject(params, function (err, data) {
-    if (err) {
-      console.log(err);
-      res.status(500);
-      res.end('Error Fetching File');
-    }
-    else {
-      res.attachment(params.Key); // Set Filename
-      res.type(data.ContentType); // Set FileType
-      res.send(data.Body);        // Send File Buffer
-      
-      DataProduct.collection.updateOne(
-        { _id: mongoose.Types.ObjectId(dp_id) },
-        { $addToSet: { downloads: Date.now()}  } 
-      );
-    }
-  });
+    const s3 = new AWS.S3({ });
+    
+    var params = {Bucket: dp.owner.nom, Key: `${dp.folder.path}${dp.nom}.${dp.formatData}`};
+    
+    s3.getObject(params, function (err, data) {
+      if (err) {
+        console.log(err);
+        res.status(500);
+        res.end('Error Fetching File');
+      }
+      else {
+        res.attachment(params.Key); // Set Filename
+        res.type(data.ContentType); // Set FileType
+        res.send(data.Body);        // Send File Buffer
+        
+        DataProduct.collection.updateOne(
+          { _id: mongoose.Types.ObjectId(dp_id) },
+          { $addToSet: { downloads: Date.now()}  } 
+          );
+        }
+      });
+  }
 };
+
+exports.test_redirect = async (req, res) => {
+  res.redirect('https://download.data.grandlyon.com/ws/grandlyon/pvo_patrimoine_voirie.pvoparking/all.json?maxfeatures=-1');
+}
 
 //convert from json to csv
 // const { Parser } = require('json2csv');
@@ -112,6 +121,7 @@ exports.sql_query = async (req, res) => {
   // TODO: avoid full population of folder (same in get & upload dps)
   // solution 1: use native mongodb
   // solution 2: add path to data product
+  // solution 3: change how we get folder tree structure
   const dps = await DataProduct.find({ 
     'nom': { $in: tables } 
   }).populate({ path: 'owner', select: 'nom' })

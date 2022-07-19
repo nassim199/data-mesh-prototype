@@ -40,7 +40,7 @@ export default {
 	},
 	plugins: [
 		replace({
-			API_URL: '"http://localhost:3000"',
+			API_URL: '"http://10.70.10.254:3000"',
 			preventAssignment: true,
 			'process.env.NODE_ENV': JSON.stringify('production'),
 		  }),

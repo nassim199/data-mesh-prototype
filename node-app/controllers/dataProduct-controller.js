@@ -11,6 +11,8 @@ exports.createDP = async (req, res) => {
     description: req.body.description,
     formatData: req.body.formatData,
     dateCreation: req.body.dateCreation,
+    isExternal: req.body.isExternal,
+    externalSourceLink: req.body.externalSourceLink,
     dataLineage: req.body.selectedIds,
     hasNotebook: req.body.checked,
     notebookId: "",
@@ -38,7 +40,10 @@ exports.createDP = async (req, res) => {
         method: 'post',
         url:  process.env.ZeppelinLink + 'notebook',
         data: {
-          name: `${req.acteur.nom}/${folder.path}${req.body.nom}`
+          name: `${req.acteur.nom}/${folder.path}${req.body.nom}`,
+          paragraphs: [
+            {title: "title 1", text: `%python\n${req.body.selectedIds.map((id,i) => `dp${i}_url = "http://10.70.10.254:3000/dp/${id}/get_data"`).join('\n')}`}
+          ]
         }
       })
       .then((res) => {

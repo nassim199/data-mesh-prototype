@@ -11,17 +11,19 @@
   import axios from "axios";
   import { navigate } from "svelte-routing";
   
-  import {acteur, accessToken} from "./store/acteur";
+  import {accessToken} from "./store/acteur";
   import { get } from "svelte/store";
     
     
     let nom = "dp name";
     let description = "description";
     let formatData = "csv";
-    let dateCreation ;
     let selectedFolder;
     let selectedIds = [];
     let checked = false;
+    let isExternal = false;
+    $: notExternal = !isExternal;
+    let externalSourceLink = "";
 
     let dataProducts = [];
     let folders = [];
@@ -71,7 +73,9 @@
             dateCreation: new Date(),
             selectedFolder,
             selectedIds,
-            checked
+            checked,
+            isExternal,
+            externalSourceLink
           },
           headers: {
             authorization: "JWT " +  get(accessToken)
@@ -101,6 +105,8 @@
       items={dataProducts.map(dp => {return { id: dp._id, text: dp.nom}})}
       bind:selectedIds
     />
+  <Checkbox labelText="Lien externe pour les données" bind:isExternal />
+  <TextInput bind:value={externalSourceLink} labelText="data product link" placeholder="Enter external link..." bind:disabled={notExternal}/>
   <Checkbox labelText="Creer un notebook avec ce data product" bind:checked />
    <Button type="submit">Create</Button>
 </Form>
