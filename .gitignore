@@ -4,3 +4,7 @@ svelte-app/node_modules
 svelte-app/public/build/
 
 svelte-app/.DS_Store
+
+vue-project/node_modules
+vue-project/.DS_Store
+vue-project/dist/
