@@ -21,6 +21,7 @@ exports.createDP = async (req, res) => {
 
   let dp_save = async (err, dp) => {
     if (err) {
+        console.log(err)
         res.status(500).send({message: err});
         return;
     } else {
@@ -34,7 +35,7 @@ exports.createDP = async (req, res) => {
   };
 
   try {
-    if (req.body.checked) {
+    if (req.body.hasNotebook) {
       let folder = await Folder.collection.findOne({ _id: mongoose.Types.ObjectId(folderId) });
       axios({
         method: 'post',
@@ -147,20 +148,19 @@ exports.createFolder = async (req, res) => {
   );  
 }
 
-async function past_dps(dp_id) {
+async function past_dps(dp_id, parent) {
   try {
     let dp = await DataProduct.findById(dp_id);
-
-    let dp_lineage = {
-      id: dp._id,
-      name: dp.nom,
-      children: []
-    }
+    let dp_lineage = [{
+        id: dp._id,
+        key: dp.nom,
+        parent: parent
+      }]
 
     for (let i = 0; i < dp.dataLineage.length; i++) {
       const id = dp.dataLineage[i];
-      let temp_dp_lineage = await past_dps(id)
-      dp_lineage.children.push(temp_dp_lineage)
+      let temp_dp_lineage = await past_dps(id, dp.nom)
+      dp_lineage = [...dp_lineage,...temp_dp_lineage]
     }
 
     return dp_lineage;
@@ -172,7 +172,7 @@ async function past_dps(dp_id) {
 exports.getDataLineage = async (req, res) => {
   let dpId = req.params.dp_id;
   try {
-    dp_lineage = await past_dps(dpId);
+    dp_lineage = await past_dps(dpId, "");
     res.status(201).json({
       message: 'get data product lineage successful',
       data_lineage: dp_lineage

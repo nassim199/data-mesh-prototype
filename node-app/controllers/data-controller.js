@@ -51,6 +51,10 @@ exports.get_data = async (req, res) => {
     
   if (dp.isExternal) {
     res.redirect(dp.externalSourceLink);
+    DataProduct.collection.updateOne(
+      { _id: mongoose.Types.ObjectId(dp_id) },
+      { $addToSet: { downloads: Date.now()}  } 
+      );
   } else {
 
     const s3 = new AWS.S3({ });

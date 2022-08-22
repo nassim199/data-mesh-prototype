@@ -5,7 +5,7 @@ const {createDP, getAllDPs, getMyDPs, getDP, createFolder, getDataLineage} = req
 const verifyToken = require('../middleware/authJWT');
 
 router.post("/create-dp", verifyToken, createDP);
-router.get("/get-dps", verifyToken, getAllDPs);
+router.get("/get-dps", getAllDPs);
 router.get("/get-my-dps", verifyToken, getMyDPs);
 router.post("/create-folder", verifyToken, createFolder);
 
