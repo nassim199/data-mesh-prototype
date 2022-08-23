@@ -86,11 +86,7 @@
                     <Button
                       label="open"
                       class="pi pi-window-maximize"
-                      @click="
-                        () => {
-                          window.open(notebook_link);
-                        }
-                      "
+                      @click="openUrl(notebook_link)"
                     ></Button>
                   </div>
                   <div v-else>No Notebook</div>
@@ -352,6 +348,9 @@ export default {
         alert("Cannot copy");
       }
     },
+    openUrl(link) {
+      window.open(link, "_blank");
+    },
   },
   computed: {
     dp_id() {
@@ -373,17 +372,17 @@ export default {
           result[d] += 1;
         });
         return {
-                labels: ['j-7', 'j-6', 'j-5', 'j-4', 'j-3', 'j-2', 'j-1'],
-                datasets: [
-                    {
-                        label: 'Downloads',
-                        data: result,
-                        fill: false,
-                        borderColor: '#42A5F5',
-                        tension: .4
-                    }
-                ]
-            };
+          labels: ["j-7", "j-6", "j-5", "j-4", "j-3", "j-2", "j-1"],
+          datasets: [
+            {
+              label: "Downloads",
+              data: result,
+              fill: false,
+              borderColor: "#42A5F5",
+              tension: 0.4,
+            },
+          ],
+        };
       } else {
         return null;
       }
@@ -395,7 +394,7 @@ export default {
       return `http://ec2-54-161-217-174.compute-1.amazonaws.com:3000/data/${this.dataProduct._id}/upload_data`;
     },
     notebook_link() {
-      return `http://10.70.10.254:8080/next/#/notebook/${this.dataProduct.notebookId}`;
+      return `http://ec2-54-161-217-174.compute-1.amazonaws.com:8090/next/#/notebook/${this.dataProduct.notebookId}`;
     },
   },
   components: {

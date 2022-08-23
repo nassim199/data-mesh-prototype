@@ -83,11 +83,12 @@ export default {
             description: '',
             format: null,
 			selectedFolder: '',
-			selectedDPs: null,
+			selectedDPs: [],
 			checked: false,
 			externalSource: '',
 			hasNotebook: true,
             submitted: false,
+            externalSourceLink: '',
             formats: [{name: 'json', code: 'json'}, {name: 'csv', code: 'csv'}],
 			dataProducts: [{name: 'historique disponibilite'}, {name: 'avis'}],
             folders: null,
@@ -126,6 +127,8 @@ export default {
                 selectedFolder: this.selectedFolder,
                 selectedIds: this.selectedDPs.map(dp => dp._id),
                 isExternal: this.checked,
+                checked: this.hasNotebook,
+                hasNotebook: this.hasNotebook,
                 externalSourceLink: this.externalSourceLink
                 },
                 headers: {

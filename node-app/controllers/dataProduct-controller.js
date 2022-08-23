@@ -35,7 +35,7 @@ exports.createDP = async (req, res) => {
   };
 
   try {
-    if (req.body.hasNotebook) {
+    if (req.body.checked) {
       let folder = await Folder.collection.findOne({ _id: mongoose.Types.ObjectId(folderId) });
       axios({
         method: 'post',

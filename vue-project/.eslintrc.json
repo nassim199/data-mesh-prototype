@@ -3,21 +3,12 @@
         "browser": true,
         "es2020": true
     },
-    "extends": [
-        "eslint:recommended",
-        "plugin:vue/recommended",
-        "eslint:all", // just added this line
-        "plugin:vue/all" // and this line
-    ],
     "overrides": [
     ],
     "parserOptions": {
-        "ecmaVersion": "latest",
+        "ecmaVersion": 11,
         "sourceType": "module"
     },
-    "plugins": [
-        "vue"
-    ],
     "rules": {
     }
 }
