@@ -80,7 +80,7 @@ export default {
             accept: null,
             submitted: false,
             showMessage: false,
-            API_URL: "http://localhost:3000"
+            API_URL: "http://ec2-54-161-217-174.compute-1.amazonaws.com:3000"
         }
     },
     validations() {

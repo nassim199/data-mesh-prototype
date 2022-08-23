@@ -18,7 +18,7 @@ export default {
   mounted() {
     axios({
       method: "get",
-      url: "http://localhost:3000/dp/" + this.dp + "/data-lineage",
+      url: "http://ec2-54-161-217-174.compute-1.amazonaws.com:3000/dp/" + this.dp + "/data-lineage",
       headers: {
         authorization: "JWT " + this.acteur.token,
       },

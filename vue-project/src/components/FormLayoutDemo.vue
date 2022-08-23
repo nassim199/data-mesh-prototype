@@ -117,7 +117,7 @@ export default {
             
             axios({
                 method: 'post',
-                url:  'http://localhost:3000/dp/create-dp',
+                url:  'http://ec2-54-161-217-174.compute-1.amazonaws.com:3000/dp/create-dp',
                 data: {
                 nom: this.name,
                 description: this.description,
@@ -166,7 +166,7 @@ export default {
         }
         axios({
             method: 'get',
-            url: 'http://localhost:3000/dp/get-my-dps',
+            url: 'http://ec2-54-161-217-174.compute-1.amazonaws.com:3000/dp/get-my-dps',
             headers: {
             authorization: "JWT " + this.acteur.token
         }
@@ -178,7 +178,7 @@ export default {
 
         axios({
             method: 'get',
-            url: 'http://localhost:3000/dp/get-dps',
+            url: 'http://ec2-54-161-217-174.compute-1.amazonaws.com:3000/dp/get-dps',
         }).then((res) => {
             this.dataProducts = res.data.dataProducts;
         }).catch((error) => console.log(error));

@@ -271,7 +271,7 @@ export default {
     }
     axios({
       method: "get",
-      url: "http://localhost:3000/dp/get-my-dps",
+      url: "http://ec2-54-161-217-174.compute-1.amazonaws.com:3000/dp/get-my-dps",
       headers: {
         authorization: "JWT " + this.acteur.token,
       },
@@ -301,7 +301,7 @@ export default {
     addFolder() {
       axios({
         method: "post",
-        url: "http://localhost:3000/dp/create-folder",
+        url: "http://ec2-54-161-217-174.compute-1.amazonaws.com:3000/dp/create-folder",
         data: {
           folderId: this.selectedFolder,
           nom: this.folderName,
@@ -389,10 +389,10 @@ export default {
       }
     },
     download_link() {
-      return `http://localhost:3000/data/${this.dataProduct._id}/get_data`;
+      return `http://ec2-54-161-217-174.compute-1.amazonaws.com:3000/data/${this.dataProduct._id}/get_data`;
     },
     upload_link() {
-      return `http://localhost:3000/data/${this.dataProduct._id}/upload_data`;
+      return `http://ec2-54-161-217-174.compute-1.amazonaws.com:3000/data/${this.dataProduct._id}/upload_data`;
     },
     notebook_link() {
       return `http://10.70.10.254:8080/next/#/notebook/${this.dataProduct.notebookId}`;

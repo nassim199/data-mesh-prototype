@@ -207,7 +207,7 @@ export default {
     this.initFilters1();
     axios({
       method: "get",
-      url: "http://localhost:3000/dp/get-dps",
+      url: "http://ec2-54-161-217-174.compute-1.amazonaws.com:3000/dp/get-dps",
     })
       .then((res) => {
         this.dataProducts = res.data.dataProducts;
@@ -244,7 +244,7 @@ export default {
       });
     },
     download_link(dp) {
-      return `http://localhost:3000/data/${dp._id}/get_data`;
+      return `http://ec2-54-161-217-174.compute-1.amazonaws.com:3000/data/${dp._id}/get_data`;
     },
     async copyURL(mytext) {
       try {
