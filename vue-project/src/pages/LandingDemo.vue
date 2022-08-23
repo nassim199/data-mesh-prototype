@@ -6,7 +6,6 @@
                 <p class="font-normal text-2xl line-height-3 md:mt-3 text-gray-700">Sed blandit libero volutpat sed cras. Fames ac turpis egestas integer. Placerat in egestas erat... </p>
                 <router-link to="/register"><Button label="Register" class="p-button-rounded text-xl border-none mt-5 bg-blue-500 font-normal text-white line-height-3 px-3"></Button></router-link>
             </div>
-            <img src="layout/images/screen-1.png" class="bottom-0" alt="hero screen" style="right:10%;">
         </div>
         
         <div class="py-4 px-4 lg:px-8 mt-5 mx-0 lg:mx-8" id="features">
