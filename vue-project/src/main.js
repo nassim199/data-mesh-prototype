@@ -110,7 +110,7 @@ app.config.globalProperties.$appState = reactive({ theme: 'lara-light-indigo', d
 app.use(PrimeVue, { ripple: true, inputStyle: 'outlined' });
 app.use(ConfirmationService);
 app.use(ToastService);
-app.use(createPinia())
+app.use(createPinia());
 app.use(router);
 
 app.directive('tooltip', Tooltip);

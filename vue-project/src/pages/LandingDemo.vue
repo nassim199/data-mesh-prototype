@@ -2,7 +2,7 @@
     <div class="surface-0 overflow-hidden">
         <div class="grid py-4 px-4 lg:px-8 relative" id="hero">
             <div class="mx-4 md:mx-8 mt-0 md:mt-4">
-                <h1 class="text-6xl font-bold text-gray-900 line-height-2"><span class="font-light block">Eu sem integer</span>eget magna fermentum</h1>
+                <h1 class="text-6xl font-bold text-gray-900 line-height-2"><span class="font-light block"></span>Dataverse</h1>
                 <p class="font-normal text-2xl line-height-3 md:mt-3 text-gray-700">Sed blandit libero volutpat sed cras. Fames ac turpis egestas integer. Placerat in egestas erat... </p>
                 <router-link to="/register"><Button label="Register" class="p-button-rounded text-xl border-none mt-5 bg-blue-500 font-normal text-white line-height-3 px-3"></Button></router-link>
             </div>
